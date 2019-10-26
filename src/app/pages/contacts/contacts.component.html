@@ -1,0 +1,105 @@
+<div>
+  <div class="container">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <div class="panel-title">
+          <h3 class="text-center">Phone Book</h3>
+        </div>
+      </div>
+      <div class="panel-body pt-4">
+        <form class="form-horizontal">
+          <div class="form-group has-info has-feedback d-flex">
+            <label for="seacrh" class="col-sm-2 control-label pt-2"
+              >Search
+            </label>
+            <div class="col-sm-8 m-auto d-flex">
+              <input
+                type="text"
+                name="search"
+                ([ngModel])="(searchModel)"
+                class="form-control"
+                (keyup)="search($event)"
+              />
+              <i class="material-icons srch">
+                search
+              </i>
+            </div>
+          </div>
+        </form>
+        <div class="table-responsive pt-3">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Contacts</th>
+                <th>Phone Number</th>
+                <th>Handle</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="contacts">
+              <tr
+                *ngFor="let contact of contacts | filter: searchModel"
+                app-contact
+                [resContacts]="contacts"
+                (contacts)="UpdateContactsList($event)"
+                [contact]="contact"
+              ></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <form [formGroup]="addContactForm" class="form-inline row">
+          <div class="form-group col-md-4">
+            <span>Name</span>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="name"
+              maxlength="15"
+              [ngClass]="{
+                'is-invalid': f.name.errors && f.name.touched
+              }"
+            />
+            <div *ngIf="f.name.errors" class="invalid-feedback">
+              <div *ngIf="f.name.errors.pattern">
+                Enter a valid name
+              </div>
+              <div *ngIf="!f.name.errors.pattern && f.name.errors.minlength">
+                Name must not be less than 3 chars
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <span>Phone</span>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="phone"
+              [ngClass]="{
+                'is-invalid': f.phone.errors && f.phone.touched
+              }"
+            />
+            <div *ngIf="f.phone.errors" class="invalid-feedback">
+              <div *ngIf="f.phone.errors.pattern">
+                Enter a valid phone number
+              </div>
+              <div
+                *ngIf="!f.phone.errors.pattern && f.phone.errors?.uniquePhone"
+              >
+                Phone Number must be unique
+              </div>
+            </div>
+          </div>
+          <button
+            type="submit"
+            class="btn btn-primary btn-sm col-md-1 mt-4"
+            value="Add"
+            (click)="addContact()"
+          >
+            Add
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

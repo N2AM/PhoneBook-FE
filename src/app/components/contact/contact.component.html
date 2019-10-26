@@ -1,0 +1,59 @@
+<td>
+  <form [formGroup]="contactFormName">
+    <span *ngIf="!edit">{{ contact.name }}</span>
+    <input
+      *ngIf="edit"
+      type="text"
+      class="form-control"
+      formControlName="name"
+      maxlength="15"
+      [ngClass]="{
+        'is-invalid': fc.name.errors && fc.name.touched
+      }"
+    />
+    <div *ngIf="fc.name.errors" class="invalid-feedback">
+      <div *ngIf="fc.name.errors.pattern">
+        Enter a valid name
+      </div>
+      <div *ngIf="!fc.name.errors.pattern && fc.name.errors.minlength">
+        Name must not be less than 3 chars
+      </div>
+    </div>
+  </form>
+</td>
+<td>
+  <form [formGroup]="contactFormPhone">
+    <span *ngIf="!edit">{{ contact.phone }}</span>
+    <input
+      *ngIf="edit"
+      type="text"
+      class="form-control"
+      formControlName="phone"
+      [ngClass]="{
+        'is-invalid': f.phone.errors && f.phone.touched
+      }"
+    />
+    <div *ngIf="f.phone.errors" class="invalid-feedback">
+      <div *ngIf="f.phone.errors.pattern">
+        Enter a valid phone number
+      </div>
+      <div *ngIf="!f.phone.errors.pattern && f.phone.errors.uniquePhone">
+        Phone Number must be unique
+      </div>
+    </div>
+  </form>
+</td>
+<td>
+  <a href="#" (click)="removeItem(contact.id)"
+    ><i class="material-icons"> delete_forever </i>&nbsp;</a
+  >
+  <a *ngIf="!edit" href="#" (click)="edit = !edit">
+    <i class="material-icons">
+      edit
+    </i></a
+  ><a *ngIf="edit" href="#" (click)="save(contact.id)">
+    &nbsp;<i class="material-icons">
+      check
+    </i>
+  </a>
+</td>

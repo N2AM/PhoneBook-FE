@@ -1,0 +1,23 @@
+.panel {
+  width: 80%;
+  margin: 50px auto;
+}
+td:nth-of-type(1) {
+  width: 30%;
+}
+td:nth-of-type(2) {
+  width: 35%;
+}
+input[type="text"] {
+  width: 100%;
+}
+.srch {
+  position: relative;
+  left: -34px;
+  top: 7px;
+}
+@media (min-width: 768px) and (max-width: 992px) {
+  .form-inline .form-control {
+    width: 150px;
+  }
+}
