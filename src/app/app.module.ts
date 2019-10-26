@@ -11,6 +11,7 @@ import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { PrefixInterceptor } from "./core/interceptors/prefix-interceptors";
 import { FilterPipe } from "./shared/pipes/filter.pipe";
 import { ContactComponent } from "./components/contact/contact.component";
+import { UniqueNumberValidators } from "./shared/validators/Unique-phone.validator";
 @NgModule({
   declarations: [AppComponent, ContactsComponent, FilterPipe, ContactComponent],
   imports: [
@@ -22,7 +23,8 @@ import { ContactComponent } from "./components/contact/contact.component";
     ReactiveFormsModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: PrefixInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: PrefixInterceptor, multi: true },
+    UniqueNumberValidators
   ],
   bootstrap: [AppComponent]
 })

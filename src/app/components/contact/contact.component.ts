@@ -7,6 +7,7 @@ import {
   AbstractControl
 } from "@angular/forms";
 import { CrudService } from "src/app/shared/services/crud.service";
+import { UniqueNumberValidators } from "src/app/shared/validators/Unique-phone.validator";
 
 @Component({
   selector: "[app-contact]",
@@ -21,7 +22,11 @@ export class ContactComponent implements OnInit {
   edit: boolean = false;
   contactFormName: FormGroup;
   contactFormPhone: FormGroup;
-  constructor(private crud: CrudService, private formBuilder: FormBuilder) {}
+  constructor(
+    private crud: CrudService,
+    private formBuilder: FormBuilder,
+    private UniqueNumberValidators: UniqueNumberValidators
+  ) {}
 
   ngOnInit() {
     // console.log(this.contact);
@@ -36,7 +41,9 @@ export class ContactComponent implements OnInit {
         phone: [this.contact.phone, [Validators.pattern("^[0-9]*$")]]
       },
       {
-        validator: this.UniqueNumber.bind(this)
+        validator: this.UniqueNumberValidators.UniqueNumber.bind(
+          this.UniqueNumberValidators
+        )
       }
     );
   }
@@ -69,14 +76,6 @@ export class ContactComponent implements OnInit {
         .subscribe((res: Contact[]) => {
           this.contacts.emit(res);
         });
-    }
-  }
-  UniqueNumber(c: AbstractControl) {
-    const value = c.get("phone").value;
-    if (this.contacts) {
-      return this.resContacts.find(m => m.phone === value)
-        ? c.get("phone").setErrors({ uniquePhone: true })
-        : null;
     }
   }
 }

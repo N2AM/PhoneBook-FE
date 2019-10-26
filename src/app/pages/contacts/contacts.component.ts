@@ -7,6 +7,7 @@ import {
   Validators,
   AbstractControl
 } from "@angular/forms";
+import { UniqueNumberValidators } from "src/app/shared/validators/Unique-phone.validator";
 
 @Component({
   selector: "app-contacts",
@@ -15,7 +16,11 @@ import {
 })
 export class ContactsComponent implements OnInit {
   contacts: Contact[] = [];
-  constructor(private crud: CrudService, private formBuilder: FormBuilder) {}
+  constructor(
+    private crud: CrudService,
+    private formBuilder: FormBuilder,
+    private UniqueNumberValidators: UniqueNumberValidators
+  ) {}
   searchModel;
   addContactForm: FormGroup;
   contactForm: FormGroup;
@@ -32,7 +37,9 @@ export class ContactsComponent implements OnInit {
         phone: ["", [Validators.pattern("^[0-9]*$")]]
       },
       {
-        validator: this.UniqueNumber.bind(this)
+        validator: this.UniqueNumberValidators.UniqueNumber.bind(
+          this.UniqueNumberValidators
+        )
       }
     );
   }
